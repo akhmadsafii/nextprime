@@ -19,7 +19,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Icons } from '@/components/common/icons';
 import { getSigninSchema } from '../forms/signin-schema';
 
 export default function Page() {
@@ -31,8 +30,8 @@ export default function Page() {
   const form = useForm({
     resolver: zodResolver(getSigninSchema()),
     defaultValues: {
-      email: 'demo@kt.com',
-      password: 'demo123',
+      userid: '',
+      password: '',
       rememberMe: false,
     },
   });
@@ -44,14 +43,18 @@ export default function Page() {
     try {
       const response = await signIn('credentials', {
         redirect: false,
-        email: values.email,
+        userid: values.userid,
         password: values.password,
         rememberMe: values.rememberMe,
       });
 
       if (response?.error) {
-        const errorData = JSON.parse(response.error);
-        setError(errorData.message);
+        try {
+          const errorData = JSON.parse(response.error);
+          setError(errorData.message);
+        } catch {
+          setError(response.error);
+        }
       } else {
         router.push('/');
       }
@@ -83,32 +86,9 @@ export default function Page() {
             <RiErrorWarningFill className="text-primary" />
           </AlertIcon>
           <AlertTitle className="text-accent-foreground">
-            Use <span className="text-mono font-semibold">demo@kt.com</span>{' '}
-            username and{' '}
-            <span className="text-mono font-semibold">demo123</span> for demo
-            access.
+            Gunakan NIK/User ID dan password domain Anda.
           </AlertTitle>
         </Alert>
-
-        <div className="flex flex-col gap-3.5">
-          <Button
-            variant="outline"
-            type="button"
-            onClick={() => signIn('google', { callbackUrl: '/' })}
-          >
-            <Icons.googleColorful className="size-5! opacity-100!" /> Sign in
-            with Google
-          </Button>
-        </div>
-
-        <div className="relative py-1.5">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">or</span>
-          </div>
-        </div>
 
         {error && (
           <Alert variant="destructive">
@@ -121,12 +101,12 @@ export default function Page() {
 
         <FormField
           control={form.control}
-          name="email"
+          name="userid"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>NIK / User ID</FormLabel>
               <FormControl>
-                <Input placeholder="Your email" {...field} />
+                <Input placeholder="Masukkan NIK / User ID" autoComplete="username" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,6 +124,7 @@ export default function Page() {
               <div className="relative">
                 <Input
                   placeholder="Your password"
+                  autoComplete="current-password"
                   type={passwordVisible ? 'text' : 'password'} // Toggle input type
                   {...field}
                 />

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Container } from "@/components/common/container";
+import { Container } from '@/components/common/container';
 
 function Toolbar({ children }) {
   return (
@@ -12,7 +12,7 @@ function Toolbar({ children }) {
   );
 }
 
-function ToolbarHeading({ title = "Dashboard" }) {
+function ToolbarHeading({ title = 'Dashboard' }) {
   return <h1 className="font-medium text-base text-mono">{title}</h1>;
 }
 

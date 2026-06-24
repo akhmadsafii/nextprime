@@ -53,10 +53,10 @@ export function Header() {
             side="left"
             close={false}
           >
-              <SheetHeader className="p-0 space-y-0" />
-              <SheetBody className="px-0 pt-5 flex flex-col grow">
-                <SidebarMenu />
-              </SheetBody>
+            <SheetHeader className="p-0 space-y-0" />
+            <SheetBody className="px-0 pt-5 flex flex-col grow">
+              <SidebarMenu />
+            </SheetBody>
           </SheetContent>
         </Sheet>
       </Container>

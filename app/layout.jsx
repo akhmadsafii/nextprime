@@ -25,7 +25,7 @@ export default async function RootLayout({ children }) {
     <html className="h-full" suppressHydrationWarning>
       <body
         className={cn(
-          'antialiased flex h-full text-base text-foreground bg-background',
+          'antialiased flex h-full w-full min-w-0 overflow-hidden text-base text-foreground bg-background',
           inter.className,
         )}
       >
